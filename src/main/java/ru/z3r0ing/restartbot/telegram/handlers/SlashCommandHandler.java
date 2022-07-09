@@ -65,8 +65,8 @@ public class SlashCommandHandler implements Handler {
 
     @Override
     public boolean canWorkWithThisUpdate(Update update) {
-        return !update.hasCallbackQuery() // without CallbackQuery
-                && update.hasMessage() // with Message
+        // if update get Message with text starts with '/'
+        return update.hasMessage() // with Message
                 && update.getMessage().getText() != null // With text
                 && update.getMessage().getText().startsWith("/"); // message text starts with '/'
     }

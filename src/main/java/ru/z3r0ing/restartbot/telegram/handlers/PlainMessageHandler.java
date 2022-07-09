@@ -21,8 +21,8 @@ public class PlainMessageHandler implements Handler {
 
     @Override
     public boolean canWorkWithThisUpdate(Update update) {
-        return !update.hasCallbackQuery() // without CallbackQuery
-                && update.hasMessage() // with Message
+        // if update get Message with text doesn't start with '/'
+        return update.hasMessage() // with Message
                 && update.getMessage().getText() != null // With text
                 && !update.getMessage().getText().startsWith("/"); // message text doesn't start with '/'
     }
