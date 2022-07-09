@@ -81,15 +81,15 @@ public class RestartBot extends TelegramLongPollingBot {
         // execute result of handling
         try {
             execute(method);
+
+            // if result of handling is sending message
+            if (method instanceof SendMessage) {
+                SendMessage sendMessage = (SendMessage) method;
+                // log sent message
+                log.info("Sent message " + sendMessage.getChatId() + ": " + sendMessage.getText());
+            }
         } catch (TelegramApiException tae) {
             log.error("Error while execute telegram method", tae);
-        }
-
-        // if result of handling is sending message
-        if (method instanceof SendMessage) {
-            SendMessage sendMessage = (SendMessage) method;
-            // log sent message
-            log.info("Sended message " + sendMessage.getChatId() + ": " + sendMessage.getText());
         }
     }
 }
