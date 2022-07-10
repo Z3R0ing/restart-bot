@@ -9,7 +9,7 @@ import ru.z3r0ing.restartbot.services.BotChatService;
 
 import java.util.Optional;
 
-@Service("restartbot_chatService")
+@Service(BotChatService.NAME)
 public class BotChatServiceImpl implements BotChatService {
 
     @Autowired
