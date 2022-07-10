@@ -12,7 +12,7 @@ public class WebUtils {
      * Test whether that host is reachable
      * @param host the specified host (host name or textual representation of an IP address)
      * @return a boolean indicating if the host is reachable
-     * @throws UnknownHostException if no IP address for the host could be found\
+     * @throws UnknownHostException if no IP address for the host could be found.
      * @throws IOException if a network error occurs
      */
     public static boolean isHostReachable(String host) throws UnknownHostException, IOException {
