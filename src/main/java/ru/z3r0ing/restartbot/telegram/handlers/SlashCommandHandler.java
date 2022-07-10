@@ -10,9 +10,9 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.z3r0ing.restartbot.data.entities.BotChat;
 import ru.z3r0ing.restartbot.services.BotChatService;
+import ru.z3r0ing.restartbot.utils.WebUtils;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
@@ -81,8 +81,7 @@ public class SlashCommandHandler implements Handler {
      */
     String pingCommand(String host) {
         try {
-            InetAddress address = InetAddress.getByName(host);
-            boolean reachable = address.isReachable(10000);
+            boolean reachable = WebUtils.isHostReachable(host);
             if (reachable) {
                 return "Host " + host + " is up";
             } else {
