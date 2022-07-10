@@ -8,15 +8,15 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "restartbot_Chat")
+@Entity(name = "restartbot_chat")
 @Table(name = "RESTARTBOT_CHAT")
-public class Chat implements Serializable {
+public class BotChat implements Serializable {
     private static final long serialVersionUID = 8699861054225570126L;
 
-    public Chat() {
+    public BotChat() {
     }
 
-    public Chat(Long id, String name) {
+    public BotChat(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -48,9 +48,9 @@ public class Chat implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Chat)) return false;
-        Chat chat = (Chat) o;
-        return id.equals(chat.id);
+        if (!(o instanceof BotChat)) return false;
+        BotChat botChat = (BotChat) o;
+        return id.equals(botChat.id);
     }
 
     @Override
