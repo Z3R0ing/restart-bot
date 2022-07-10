@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 **/src/main/resources/telegram.properties
+**/src/main/resources/host_list.properties
 **/src/main/resources/testDB.mv.db
 
 ### STS ###
