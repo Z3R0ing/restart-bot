@@ -1,5 +1,7 @@
 package ru.z3r0ing.restartbot.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,6 +22,8 @@ public class BotChatServiceImpl implements BotChatService {
     @Autowired
     RestartBot restartBot;
 
+    private static final Logger log = LoggerFactory.getLogger(BotChatServiceImpl.class);
+
     @Override
     public BotChat getBotChatByTelegramChat(Chat chat) {
         Long id = chat.getId();
@@ -36,6 +40,9 @@ public class BotChatServiceImpl implements BotChatService {
     @Override
     public void sendMessageToChat(String chatId, String message) throws TelegramApiException {
         SendMessage newMessage = new SendMessage(chatId, message);
+        newMessage.setParseMode("MarkdownV2");
         restartBot.execute(newMessage);
+        // log sent message
+        log.info("Sent message " + newMessage.getChatId() + ": " + newMessage.getText());
     }
 }
