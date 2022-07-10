@@ -19,7 +19,7 @@ public class HostsCheckerServiceImpl implements HostsCheckerService {
     public Map<String, Boolean> getHostsStatus() throws UnknownHostException, IOException {
         Properties hosts = new Properties();
         // load a properties file
-        InputStream input = new FileInputStream("classpath:host_list.properties");
+        InputStream input = new FileInputStream("./src/main/resources/host_list.properties");
         hosts.load(input);
 
         // result map
