@@ -71,7 +71,7 @@ public class SlashCommandHandler implements Handler {
      */
     String startCommand(Chat chat) {
         BotChat botChat = botChatService.getBotChatByTelegramChat(chat);
-        return "Hello, *" + botChat.getName() + "*!";
+        return "Hello, **" + botChat.getName() + "**!";
     }
 
     /**
