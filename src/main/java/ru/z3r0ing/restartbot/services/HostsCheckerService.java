@@ -6,6 +6,8 @@ import java.util.Map;
 
 public interface HostsCheckerService {
 
+    String NAME = "restartbot_hostsCheckerService";
+
     /**
      * Checks all hosts from host list (./src/main/resources/host_list.properties)
      * @return map with result. Key is name, value is status.

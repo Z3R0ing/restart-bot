@@ -1,5 +1,6 @@
 package ru.z3r0ing.restartbot.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.z3r0ing.restartbot.services.HostsCheckerService;
 import ru.z3r0ing.restartbot.utils.WebUtils;
 
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+@Service(HostsCheckerService.NAME)
 public class HostsCheckerServiceImpl implements HostsCheckerService {
 
     @Override
