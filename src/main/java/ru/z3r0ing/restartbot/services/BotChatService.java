@@ -1,6 +1,7 @@
 package ru.z3r0ing.restartbot.services;
 
 import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.z3r0ing.restartbot.data.entities.BotChat;
 
 public interface BotChatService {
@@ -12,5 +13,13 @@ public interface BotChatService {
      * @apiNote Creates new record if BotChat with such ID not found in DB
      */
     BotChat getBotChatByTelegramChat(Chat chat);
+
+    /**
+     * Sends message to chat with such ID
+     * @param chatId telegram chat ID
+     * @param message message text
+     * @throws TelegramApiException if telegram API error
+     */
+    void sendMessageToChat(String chatId, String message) throws TelegramApiException;
 
 }

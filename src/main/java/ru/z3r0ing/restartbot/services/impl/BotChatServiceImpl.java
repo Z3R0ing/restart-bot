@@ -2,10 +2,13 @@ package ru.z3r0ing.restartbot.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.z3r0ing.restartbot.data.entities.BotChat;
 import ru.z3r0ing.restartbot.data.repos.BotChatRepository;
 import ru.z3r0ing.restartbot.services.BotChatService;
+import ru.z3r0ing.restartbot.telegram.RestartBot;
 
 import java.util.Optional;
 
@@ -14,6 +17,8 @@ public class BotChatServiceImpl implements BotChatService {
 
     @Autowired
     BotChatRepository botChatRepository;
+    @Autowired
+    RestartBot restartBot;
 
     @Override
     public BotChat getBotChatByTelegramChat(Chat chat) {
@@ -28,4 +33,9 @@ public class BotChatServiceImpl implements BotChatService {
         }
     }
 
+    @Override
+    public void sendMessageToChat(String chatId, String message) throws TelegramApiException {
+        SendMessage newMessage = new SendMessage(chatId, message);
+        restartBot.execute(newMessage);
+    }
 }
