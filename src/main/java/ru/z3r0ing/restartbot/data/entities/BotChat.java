@@ -28,6 +28,9 @@ public class BotChat implements Serializable {
     @Column(name = "NAME")
     String name;
 
+    @Column(name = "IS_SUBSCRIBED")
+    Boolean isSubscribed;
+
     public Long getId() {
         return id;
     }
@@ -43,6 +46,15 @@ public class BotChat implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Nullable
+    public Boolean getSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setSubscribed(Boolean subscribed) {
+        isSubscribed = subscribed;
     }
 
     @Override
