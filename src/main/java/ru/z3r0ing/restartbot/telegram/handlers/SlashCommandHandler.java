@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.z3r0ing.restartbot.data.entities.BotChat;
 import ru.z3r0ing.restartbot.services.BotChatService;
+import ru.z3r0ing.restartbot.services.ReportService;
 import ru.z3r0ing.restartbot.utils.WebUtils;
 
 import java.io.IOException;
@@ -22,6 +23,8 @@ public class SlashCommandHandler implements Handler {
 
     @Autowired
     BotChatService botChatService;
+    @Autowired
+    ReportService reportService;
 
     private static final Logger log = LoggerFactory.getLogger(SlashCommandHandler.class);
 
@@ -29,8 +32,10 @@ public class SlashCommandHandler implements Handler {
     public BotApiMethod<?> handleUpdate(Update update) throws IllegalArgumentException {
         Message message = update.getMessage();
         String messageText = message.getText();
+
         // remove '/' in start of string and split: first element - command, second (if exist) - payload
         String[] commandWithPayload = messageText.substring(1).split(" ", 2);
+
         String answerText;
         // find by command
         switch (commandWithPayload[0]) {
@@ -44,11 +49,18 @@ public class SlashCommandHandler implements Handler {
                     answerText = "Enter host after command, and try again";
                 }
                 break;
+            case "status":
+                answerText = statusCommand();
+                break;
             default:
                 answerText = "Unknown command";
                 break;
         }
-        return new SendMessage(message.getChatId().toString(), answerText);
+
+        // Creating answer message
+        SendMessage answer = new SendMessage(message.getChatId().toString(), answerText);
+        answer.setParseMode("MarkdownV2");
+        return answer;
     }
 
     @Override
@@ -71,7 +83,7 @@ public class SlashCommandHandler implements Handler {
      */
     String startCommand(Chat chat) {
         BotChat botChat = botChatService.getBotChatByTelegramChat(chat);
-        return "Hello, **" + botChat.getName() + "**!";
+        return "Hello, **" + botChat.getName() + "**\\!";
     }
 
     /**
@@ -95,4 +107,7 @@ public class SlashCommandHandler implements Handler {
         }
     }
 
+    private String statusCommand() {
+        return reportService.getReportAboutHostsStatuses();
+    }
 }
