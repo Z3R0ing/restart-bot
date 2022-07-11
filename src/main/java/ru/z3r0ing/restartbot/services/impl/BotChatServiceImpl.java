@@ -12,6 +12,7 @@ import ru.z3r0ing.restartbot.data.repos.BotChatRepository;
 import ru.z3r0ing.restartbot.services.BotChatService;
 import ru.z3r0ing.restartbot.telegram.RestartBot;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service(BotChatService.NAME)
@@ -25,6 +26,11 @@ public class BotChatServiceImpl implements BotChatService {
     private static final Logger log = LoggerFactory.getLogger(BotChatServiceImpl.class);
 
     @Override
+    public BotChat saveBotChat(BotChat botChat) {
+        return botChatRepository.save(botChat);
+    }
+
+    @Override
     public BotChat getBotChatByTelegramChat(Chat chat) {
         Long id = chat.getId();
         Optional<BotChat> optionalChat = botChatRepository.findById(id);
@@ -35,6 +41,16 @@ public class BotChatServiceImpl implements BotChatService {
             BotChat newBotChat = new BotChat(id, name);
             return botChatRepository.save(newBotChat);
         }
+    }
+
+    @Override
+    public List<BotChat> getSubscribedBotChats() {
+        return botChatRepository.findBySubscribed(true);
+    }
+
+    @Override
+    public List<BotChat> getUnsubscribedBotChats() {
+        return botChatRepository.findBySubscribed(false);
     }
 
     @Override
