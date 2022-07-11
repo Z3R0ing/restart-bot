@@ -13,7 +13,7 @@ import ru.z3r0ing.restartbot.services.HostsCheckerService;
 import ru.z3r0ing.restartbot.services.ReportService;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,22 +43,18 @@ public class ReportServiceImpl implements ReportService {
         }
 
         // Filter only hosts that are down
-        // Use iterator for safely removing while iterating over map
-        Iterator<Map.Entry<String, Boolean>> it = statuses.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Boolean> pair = it.next();
-            if (pair.getValue()) {
-                statuses.remove(pair.getKey());
-            }
-        }
+        Map<String, Boolean> badStatuses = new HashMap<>();
+        statuses.forEach((name, status) -> {
+            if (!status) badStatuses.put(name, status);
+        });
 
-        if (statuses.isEmpty()) {
+        if (badStatuses.isEmpty()) {
             log.info("All hosts is up");
             return;
         }
 
         // Generating report message
-        report = getHostsStatusMessage(statuses);
+        report = getHostsStatusMessage(badStatuses);
 
         // Sending report in all chat
         List<BotChat> chats = botChatRepository.findAll();
