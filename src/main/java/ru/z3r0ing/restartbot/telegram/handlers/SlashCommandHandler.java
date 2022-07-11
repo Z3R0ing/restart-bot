@@ -52,6 +52,9 @@ public class SlashCommandHandler implements Handler {
             case "status":
                 answerText = statusCommand();
                 break;
+            case "notification":
+                answerText = notificationCommand(message.getChat());
+                break;
             default:
                 answerText = "Unknown command";
                 break;
@@ -109,5 +112,19 @@ public class SlashCommandHandler implements Handler {
 
     private String statusCommand() {
         return reportService.getReportAboutHostsStatuses();
+    }
+
+    private String notificationCommand(Chat chat) {
+        BotChat botChat = botChatService.getBotChatByTelegramChat(chat);
+        if (botChat.getSubscribed() != null && botChat.getSubscribed()) {
+            botChat.setSubscribed(false);
+            botChatService.saveBotChat(botChat);
+            return "You have unsubscribed from notification. You can subscribe by sending \"/notification\"";
+        }
+        else {
+            botChat.setSubscribed(true);
+            botChatService.saveBotChat(botChat);
+            return "You have subscribed to notification. You can unsubscribe by sending \"/notification\"";
+        }
     }
 }
