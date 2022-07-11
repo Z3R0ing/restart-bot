@@ -119,12 +119,12 @@ public class SlashCommandHandler implements Handler {
         if (botChat.getSubscribed() != null && botChat.getSubscribed()) {
             botChat.setSubscribed(false);
             botChatService.saveBotChat(botChat);
-            return "You have unsubscribed from notification. You can subscribe by sending \"/notification\"";
+            return "You have unsubscribed from notification\\. You can subscribe by sending \"/notification\"";
         }
         else {
             botChat.setSubscribed(true);
             botChatService.saveBotChat(botChat);
-            return "You have subscribed to notification. You can unsubscribe by sending \"/notification\"";
+            return "You have subscribed to notification\\. You can unsubscribe by sending \"/notification\"";
         }
     }
 }
