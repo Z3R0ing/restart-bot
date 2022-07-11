@@ -4,9 +4,9 @@ public interface ReportService {
     String NAME = "restartbot_reportService";
 
     /**
-     * Sends a message to all chats about hosts that are down
+     * Sends a message to subscribed chats about hosts that are down
      */
-    void notifyAllChatsAboutHostIsDown();
+    void notifySubscribedChatsAboutHostIsDown();
 
     /**
      * Generates text report about hosts statuses

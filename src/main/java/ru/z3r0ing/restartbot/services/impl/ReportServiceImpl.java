@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.z3r0ing.restartbot.data.entities.BotChat;
-import ru.z3r0ing.restartbot.data.repos.BotChatRepository;
 import ru.z3r0ing.restartbot.services.BotChatService;
 import ru.z3r0ing.restartbot.services.HostsCheckerService;
 import ru.z3r0ing.restartbot.services.ReportService;
@@ -21,8 +20,6 @@ import java.util.Map;
 public class ReportServiceImpl implements ReportService {
 
     @Autowired
-    BotChatRepository botChatRepository;
-    @Autowired
     HostsCheckerService hostsCheckerService;
     @Autowired
     BotChatService botChatService;
@@ -31,7 +28,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     @Scheduled(cron = "0 * * * * *")
-    public void notifyAllChatsAboutHostIsDown() {
+    public void notifySubscribedChatsAboutHostIsDown() {
         // Getting hosts statuses
         Map<String, Boolean> statuses;
         String report;
@@ -56,8 +53,8 @@ public class ReportServiceImpl implements ReportService {
         // Generating report message
         report = getHostsStatusMessage(badStatuses);
 
-        // Sending report in all chat
-        List<BotChat> chats = botChatRepository.findAll();
+        // Sending report in subscribed chat
+        List<BotChat> chats = botChatService.getSubscribedBotChats();
         chats.forEach(botChat -> {
             try {
                 botChatService.sendMessageToChat(botChat.getId().toString(), report);
