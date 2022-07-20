@@ -34,3 +34,9 @@ In repository root:
 ```shell
 ./gradlew bootRun
 ```
+
+Or make WAR and deploy it to Tomcat. WAR file will be in build/lib
+
+```shell
+./gradlew bootWar
+```
